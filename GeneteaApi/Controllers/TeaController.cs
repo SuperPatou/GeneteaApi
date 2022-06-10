@@ -13,7 +13,7 @@ namespace GeneteaApi.Controllers
         {
             _teaRepo = teaRepo;
         }
-        [HttpGet(Name = "Teas")]
+        [HttpGet("getTeas", Name = "Teas")]
         public async Task<IActionResult> GetTeas()
         {
             try
@@ -28,7 +28,7 @@ namespace GeneteaApi.Controllers
             }
         }
 
-        [HttpGet("{id}", Name = "TeaById")]
+        [HttpGet("getTea/{id}", Name = "TeaById")]
         public async Task<IActionResult> GetTea(int id)
         {
             try
@@ -45,7 +45,7 @@ namespace GeneteaApi.Controllers
             }
         }
 
-        [HttpDelete("{id}", Name = "DeleteTea")]
+        [HttpDelete("DeleteTea/{id}", Name = "DeleteTea")]
         public async Task<IActionResult> DeleteTea(int id)
         {
             try
@@ -62,7 +62,7 @@ namespace GeneteaApi.Controllers
             }
         }
 
-        [HttpPut("{id}", Name = "UpdateTea")]
+        [HttpPut("UpdateTea/{id}", Name = "UpdateTea")]
         public async Task<IActionResult> UpdateTea(Tea unTea)
         {
             try
@@ -71,6 +71,23 @@ namespace GeneteaApi.Controllers
                 if (tea == null)
                     return NotFound();
                 return Ok();
+            }
+            catch (Exception ex)
+            {
+                //log error
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPut("InsertTea", Name = "InsertTea")]
+        public async Task<IActionResult> InsertTea(Tea unTea)
+        {
+            try
+            {
+                Tea tea = await _teaRepo.InsertTea(unTea);
+                if (tea == null)
+                    return NotFound();
+                return Ok(tea);
             }
             catch (Exception ex)
             {

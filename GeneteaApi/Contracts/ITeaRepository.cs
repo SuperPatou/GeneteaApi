@@ -11,5 +11,6 @@ namespace GeneteaApi.Contracts
         public Task<Tea> DeleteTea(int id);
 
         public Task<Tea> UpdateTea(Tea tea);
+        public Task<Tea> InsertTea(Tea tea);
     }
 }

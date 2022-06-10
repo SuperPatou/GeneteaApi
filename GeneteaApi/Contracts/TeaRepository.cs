@@ -59,5 +59,21 @@ namespace GeneteaApi.Contracts
                 return tea;
             }
         }
+
+        public async Task<Tea> InsertTea(Tea unTea)
+        {
+            var query = "INSERT INTO Teas "+
+           "(Label, Description, Price) "+
+            "VALUES (@label, @description, @price) " +
+            "SELECT CAST(SCOPE_IDENTITY() as int)";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var id = await connection.QuerySingleAsync<int>(query, new { label = unTea.Label, description = unTea.Description, price = unTea.Price });
+                
+                Tea createTea = new Tea(id, unTea.Price, unTea.Label, unTea.Description);
+                return createTea;
+            }
+        }
     }
 }
