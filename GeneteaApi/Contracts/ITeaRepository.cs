@@ -7,5 +7,9 @@ namespace GeneteaApi.Contracts
         public Task<IEnumerable<Tea>> GetTeas();
 
         public Task<Tea> GetTea(int id);
+
+        public Task<Tea> DeleteTea(int id);
+
+        public Task<Tea> UpdateTea(Tea tea);
     }
 }

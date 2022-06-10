@@ -32,5 +32,32 @@ namespace GeneteaApi.Contracts
                 return tea;
             }
         }
+
+        public async Task<Tea> DeleteTea(int id)
+        {
+            var query = "DELETE FROM Teas where IdTea=@Id";
+            using (var connection = _context.CreateConnection())
+            {
+                var tea = await connection.QuerySingleOrDefaultAsync<Tea>(query, new { id });
+                return tea;
+            }
+        }
+
+        public async Task<Tea> UpdateTea(Tea unTea)
+        {
+
+
+            var query = "UPDATE Teas " +
+                "Set Label = @label ," +
+                "Description = @description ," +
+                "Price = @price " +
+                "WHERE IdTea = @id";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var tea = await connection.QuerySingleOrDefaultAsync<Tea>(query, new { id = unTea.IdTea, label = unTea.Label, description = unTea.Description, price = unTea.Price });
+                return tea;
+            }
+        }
     }
 }
