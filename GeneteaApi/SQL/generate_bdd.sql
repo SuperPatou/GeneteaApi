@@ -81,16 +81,6 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 
-
-
-
-
-
-
-
-
-
-
 /* Procedure: GetTeas */
 DROP PROCEDURE IF EXISTS GetTeas
 GO
@@ -104,17 +94,6 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-
-
-
-
-
-
-
-
-
-
-
 
 
 /* Procedure: GetTea (int ID_tea) */

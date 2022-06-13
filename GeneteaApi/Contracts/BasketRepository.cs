@@ -35,22 +35,22 @@ namespace GeneteaApi.Contracts
 
         public async Task<Basket> InsertBasket(Basket unBasket)
         {
-            string query = "EXEC InsertBasket @name, @description, @price, @image_path, @link_page"; //To change !!
+            string query = "EXEC InsertBasket @order_date_basket, @validate_basket";
 
             using (var connection = _context.CreateConnection())
             {
-                Basket basket = await connection.QuerySingleOrDefaultAsync<Basket>(query, new { name = unTea.name_tea, description = unTea.description_tea, price = unTea.price_tea, image_path = unTea.image_path_tea, link_page = unTea.link_page_tea });
+                Basket basket = await connection.QuerySingleOrDefaultAsync<Basket>(query, new { order_date_basket = unBasket.order_date_basket, validate_basket = unBasket.validate_basket });
                 return basket;
             }
         }
 
         public async Task<Basket> UpdateBasket(Basket unBasket)
         {
-            string query = "EXEC UpdateBasket @id, @name, @description, @price, @image_path, @link_page"; //To change !!
+            string query = "EXEC UpdateBasket @id, @order_date_basket, @validate_basket";
 
             using (var connection = _context.CreateConnection())
             {
-                Basket basket = await connection.QuerySingleOrDefaultAsync<Basket>(query, new { id = unTea.ID_tea, name = unTea.name_tea, description = unTea.description_tea, price = unTea.price_tea, image_path = unTea.image_path_tea, link_page = unTea.link_page_tea });
+                Basket basket = await connection.QuerySingleOrDefaultAsync<Basket>(query, new { id= unBasket.ID_basket, order_date_basket = unBasket.order_date_basket, validate_basket = unBasket.validate_basket });
                 return basket;
             }
         }
