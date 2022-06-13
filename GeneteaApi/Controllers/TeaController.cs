@@ -23,7 +23,6 @@ namespace GeneteaApi.Controllers
             }
             catch (Exception ex)
             {
-                //log error
                 return StatusCode(500, ex.Message);
             }
         }
@@ -40,41 +39,6 @@ namespace GeneteaApi.Controllers
             }
             catch (Exception ex)
             {
-                //log error
-                return StatusCode(500, ex.Message);
-            }
-        }
-
-        [HttpDelete("DeleteTea/{id}", Name = "DeleteTea")]
-        public async Task<IActionResult> DeleteTea(int id)
-        {
-            try
-            {
-                Tea tea = await _teaRepo.DeleteTea(id);
-                if (tea == null)
-                    return NotFound();
-                return Ok(tea.IdTea);
-            }
-            catch (Exception ex)
-            {
-                //log error
-                return StatusCode(500, ex.Message);
-            }
-        }
-
-        [HttpPut("UpdateTea/{id}", Name = "UpdateTea")]
-        public async Task<IActionResult> UpdateTea(Tea unTea)
-        {
-            try
-            {
-                Tea tea = await _teaRepo.UpdateTea(unTea);
-                if (tea == null)
-                    return NotFound();
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                //log error
                 return StatusCode(500, ex.Message);
             }
         }
@@ -91,7 +55,38 @@ namespace GeneteaApi.Controllers
             }
             catch (Exception ex)
             {
-                //log error
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPut("UpdateTea/{id}", Name = "UpdateTea")]
+        public async Task<IActionResult> UpdateTea(Tea unTea)
+        {
+            try
+            {
+                Tea tea = await _teaRepo.UpdateTea(unTea);
+                if (tea == null)
+                    return NotFound();
+                return Ok(tea);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpDelete("DeleteTea/{id}", Name = "DeleteTea")]
+        public async Task<IActionResult> DeleteTea(int id)
+        {
+            try
+            {
+                Tea tea = await _teaRepo.DeleteTea(id);
+                if (tea == null)
+                    return NotFound();
+                return Ok(tea.ID_tea);
+            }
+            catch (Exception ex)
+            {
                 return StatusCode(500, ex.Message);
             }
         }

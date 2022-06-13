@@ -120,12 +120,18 @@ AS
            ,price_tea
            ,image_path_tea
 		   ,link_page_tea)
+	 OUTPUT
+			inserted.ID_tea
+			,inserted.description_tea
+			,inserted.price_tea
+			,inserted.image_path_tea
+			,inserted.link_page_tea
      VALUES
            (@name_tea
 		   ,@description_tea
            ,@price_tea
            ,@image_path_tea
-		   ,@link_page_tea)
+		   ,@link_page_tea);
 GO
 SET ANSI_NULLS ON
 GO
@@ -143,8 +149,9 @@ CREATE PROCEDURE [dbo].[UpdateTea]
 AS   
     SET NOCOUNT ON; 
 	UPDATE teas
-	Set name_tea = @name_tea, description_tea = @description_tea, @price_tea = @price_tea, image_path_tea = @image_path_tea, link_page_tea = @link_page_tea
-    WHERE ID_tea = @ID_tea
+	SET name_tea = @name_tea, description_tea = @description_tea, price_tea = @price_tea, image_path_tea = @image_path_tea, link_page_tea = @link_page_tea
+    WHERE ID_tea = @ID_tea;
+	SELECT * from teas WHERE ID_tea=@ID_tea;
 GO
 
 /* Procedure: DeleteTea (int ID_tea) */
@@ -155,6 +162,7 @@ AS
     DELETE
 	FROM teas
 	WHERE ID_tea = @ID_tea
+	SELECT @ID_tea AS 'ID_tea'
 GO
 SET ANSI_NULLS ON
 GO

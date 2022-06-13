@@ -6,20 +6,22 @@
         {
         }
 
-        public Tea(int id, float price, string label, string description)
+        public Tea(int id, string name, string description, float price, string image_path, string link_page)
         {
-            IdTea = id;
-            Price = price;
-            Label = label;
-            Description = description;
+            ID_tea = id;
+            name_tea = name;
+            description_tea = description;
+            price_tea = price;
+            image_path_tea = image_path;
+            link_page_tea = link_page;
         }
 
-        public int IdTea { get; set; }
+        public int ID_tea { get; set; }
+        public string name_tea { get; set; }
+        public string description_tea { get; set; }
+        public float price_tea { get; set; }
+        public string image_path_tea { get; set; }
+        public string link_page_tea { get; set; }
 
-        public float Price { get; set; }
-
-        public string Label { get; set; }
-
-        public string Description { get; set; }
     }
 }
