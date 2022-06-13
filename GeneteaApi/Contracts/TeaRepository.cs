@@ -15,7 +15,7 @@ namespace GeneteaApi.Contracts
 
         public async Task<IEnumerable<Tea>> GetTeas()
         {
-            var query = "SELECT * FROM Teas";
+            var query = "EXEC dbo.GetTeas";
             using (var connection = _context.CreateConnection())
             {
                 var teas = await connection.QueryAsync<Tea>(query);
@@ -25,7 +25,7 @@ namespace GeneteaApi.Contracts
 
         public async Task<Tea> GetTea(int id)
         {
-            var query = "SELECT * FROM Teas where IdTea=@Id";
+            var query = "EXEC GetTea @IdTea = @id";
             using (var connection = _context.CreateConnection())
             {
                 var tea = await connection.QuerySingleOrDefaultAsync<Tea>(query, new { id });

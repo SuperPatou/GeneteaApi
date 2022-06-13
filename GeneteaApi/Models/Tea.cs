@@ -6,7 +6,7 @@
         {
         }
 
-        public Tea(int id, int price, string label, string description)
+        public Tea(int id, float price, string label, string description)
         {
             IdTea = id;
             Price = price;
@@ -16,7 +16,7 @@
 
         public int IdTea { get; set; }
 
-        public int Price { get; set; }
+        public float Price { get; set; }
 
         public string Label { get; set; }
 
