@@ -43,7 +43,7 @@ namespace GeneteaApi.Controllers
             }
         }
 
-        [HttpPut("InsertTea", Name = "InsertTea")]
+        [HttpPut("insertTea", Name = "InsertTea")]
         public async Task<IActionResult> InsertTea(Tea unTea)
         {
             try
@@ -59,7 +59,7 @@ namespace GeneteaApi.Controllers
             }
         }
 
-        [HttpPut("UpdateTea/{id}", Name = "UpdateTea")]
+        [HttpPut("updateTea/{id}", Name = "UpdateTea")]
         public async Task<IActionResult> UpdateTea(Tea unTea)
         {
             try
@@ -75,15 +75,13 @@ namespace GeneteaApi.Controllers
             }
         }
 
-        [HttpDelete("DeleteTea/{id}", Name = "DeleteTea")]
+        [HttpDelete("deleteTea/{id}", Name = "DeleteTea")]
         public async Task<IActionResult> DeleteTea(int id)
         {
             try
             {
-                Tea tea = await _teaRepo.DeleteTea(id);
-                if (tea == null)
-                    return NotFound();
-                return Ok(tea.ID_tea);
+                int ID_tea = await _teaRepo.DeleteTea(id);
+                return Ok(ID_tea);
             }
             catch (Exception ex)
             {

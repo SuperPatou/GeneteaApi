@@ -39,10 +39,8 @@ namespace GeneteaApi.Contracts
 
             using (var connection = _context.CreateConnection())
             {
-                var id = await connection.QuerySingleOrDefaultAsync<int>(query, new { name = unTea.name_tea, description = unTea.description_tea, price = unTea.price_tea, image_path = unTea.image_path_tea, link_page = unTea.link_page_tea }); ;
-
-                Tea createTea = new Tea(id, unTea.name_tea, unTea.description_tea, unTea.price_tea, unTea.image_path_tea, unTea.link_page_tea);
-                return createTea;
+                Tea tea = await connection.QuerySingleOrDefaultAsync<Tea>(query, new { name = unTea.name_tea, description = unTea.description_tea, price = unTea.price_tea, image_path = unTea.image_path_tea, link_page = unTea.link_page_tea });
+                return tea;
             }
         }
 
@@ -52,18 +50,18 @@ namespace GeneteaApi.Contracts
 
             using (var connection = _context.CreateConnection())
             {
-                var tea = await connection.QuerySingleOrDefaultAsync<Tea>(query, new { id = unTea.ID_tea, name = unTea.name_tea, description = unTea.description_tea, price = unTea.price_tea, image_path = unTea.image_path_tea, link_page = unTea.link_page_tea }); ;
+                Tea tea = await connection.QuerySingleOrDefaultAsync<Tea>(query, new { id = unTea.ID_tea, name = unTea.name_tea, description = unTea.description_tea, price = unTea.price_tea, image_path = unTea.image_path_tea, link_page = unTea.link_page_tea });
                 return tea;
             }
         }
 
-        public async Task<Tea> DeleteTea(int id)
+        public async Task<int> DeleteTea(int id)
         {
             var query = "EXEC DeleteTea @id";
             using (var connection = _context.CreateConnection())
             {
-                var tea = await connection.QuerySingleOrDefaultAsync<Tea>(query, new { id });
-                return tea;
+                var id_tea = await connection.QuerySingleOrDefaultAsync<int>(query, new { id });
+                return id_tea;
             }
         }
     }
