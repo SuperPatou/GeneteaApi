@@ -40,7 +40,7 @@ GO
 /* Table: baskets */
 CREATE TABLE baskets(
 	ID_basket           INT IDENTITY (1,1) NOT NULL ,
-	order_date_basket   DATETIME NOT NULL ,
+	order_date_basket   DATETIME,
 	validate_basket     bit  NOT NULL  ,
 	CONSTRAINT baskets_PK PRIMARY KEY (ID_basket)
 );
@@ -65,6 +65,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 /* Table: to_command */
+DROP TABLE IF EXISTS to_command;
 CREATE TABLE to_command(
 	ID_basket   INT  NOT NULL ,
 	ID_tea      INT  NOT NULL ,
@@ -79,8 +80,21 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
+
+
+
+
+
+
+
+
+
+
+
 /* Procedure: GetTeas */
-CREATE PROCEDURE [dbo].[GetTeas]   
+DROP PROCEDURE IF EXISTS GetTeas
+GO
+CREATE PROCEDURE GetTeas
 AS   
     SET NOCOUNT ON;  
     SELECT *
@@ -91,12 +105,26 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
+
+
+
+
+
+
+
+
+
+
+
+
 /* Procedure: GetTea (int ID_tea) */
-CREATE PROCEDURE [dbo].[GetTea] 
+DROP PROCEDURE IF EXISTS GetTea
+GO
+CREATE PROCEDURE GetTea
 	@ID_tea int
 AS   
     SET NOCOUNT ON;  
-    SELECT ID_tea, name_tea, description_tea, price_tea, image_path_tea, link_page_tea
+    SELECT *
     FROM teas
 	WHERE ID_tea = @ID_tea
 GO
@@ -106,7 +134,9 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 /* Procedure: InsertTea (varchar name_tea, varchar description_tea, float price_tea, varchar image_path_tea, varchar link_page_tea) */
-CREATE PROCEDURE [dbo].[InsertTea]
+DROP PROCEDURE IF EXISTS InsertTea
+GO
+CREATE PROCEDURE InsertTea
 	@name_tea varchar(100),
 	@description_tea varchar(1000),
 	@price_tea float,
@@ -138,8 +168,10 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-/* Procedure: UpdateTea (int ID_tea, varchar name_tea, varchar description_tea, float price_tea, varchar image_path_tea, varchar link_page_tea) */
-CREATE PROCEDURE [dbo].[UpdateTea] 
+/* Procedure: UpdateTea (int UpdateTea, varchar name_tea, varchar description_tea, float price_tea, varchar image_path_tea, varchar link_page_tea) */
+DROP PROCEDURE IF EXISTS UpdateTea
+GO
+CREATE PROCEDURE UpdateTea
 	@ID_tea int,
 	@name_tea varchar(100),
 	@description_tea varchar(1000),
@@ -151,11 +183,13 @@ AS
 	UPDATE teas
 	SET name_tea = @name_tea, description_tea = @description_tea, price_tea = @price_tea, image_path_tea = @image_path_tea, link_page_tea = @link_page_tea
     WHERE ID_tea = @ID_tea;
-	SELECT * from teas WHERE ID_tea=@ID_tea;
+	SELECT * from teas WHERE ID_tea = @ID_tea;
 GO
 
 /* Procedure: DeleteTea (int ID_tea) */
-CREATE PROCEDURE [dbo].[DeleteTea] 
+DROP PROCEDURE IF EXISTS DeleteTea
+GO
+CREATE PROCEDURE DeleteTea
 	@ID_tea int
 AS   
     SET NOCOUNT ON;  
@@ -168,6 +202,95 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
+/* //////////////////////////////////////////////////////////////////////// */
+
+/* Procedure: GetBaskets */
+DROP PROCEDURE IF EXISTS GetBaskets
+GO
+CREATE PROCEDURE GetBaskets
+AS   
+    SET NOCOUNT ON;  
+    SELECT *
+    FROM baskets
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+/* Procedure: GetBasket (int ID_basket) */
+DROP PROCEDURE IF EXISTS GetBasket
+GO
+CREATE PROCEDURE GetBasket
+	@ID_basket int
+AS   
+    SET NOCOUNT ON;  
+    SELECT *
+    FROM baskets
+	WHERE ID_basket = @ID_basket
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+/* Procedure: InsertBasket (datetime order_date_basket, bit validate_basket) */
+DROP PROCEDURE IF EXISTS InsertBasket
+GO
+CREATE PROCEDURE InsertBasket
+	@order_date_basket datetime,
+	@validate_basket bit
+AS   
+    SET NOCOUNT ON; 
+	INSERT INTO baskets
+           (order_date_basket
+		   ,validate_basket)
+	 OUTPUT
+			inserted.ID_basket
+			,inserted.order_date_basket
+			,inserted.validate_basket
+     VALUES
+           (@order_date_basket
+		   ,@validate_basket);
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+/* Procedure: UpdateBasket (int ID_basket, datetime order_date_basket, bit validate_basket) */
+DROP PROCEDURE IF EXISTS UpdateBasket
+GO
+CREATE PROCEDURE UpdateBasket
+	@ID_basket int,
+	@order_date_basket datetime,
+	@validate_basket bit
+AS   
+    SET NOCOUNT ON; 
+	UPDATE baskets
+	SET order_date_basket = @order_date_basket, validate_basket = @validate_basket
+    WHERE ID_basket = @ID_basket;
+	SELECT * from baskets WHERE ID_basket = ID_basket;
+GO
+
+/* Procedure: DeleteBasket (int ID_basket) */
+DROP PROCEDURE IF EXISTS DeleteBasket
+GO
+CREATE PROCEDURE DeleteBasket
+	@ID_basket int
+AS   
+    SET NOCOUNT ON;  
+    DELETE
+	FROM baskets
+	WHERE ID_basket = @ID_basket
+	SELECT @ID_basket AS 'ID_basket'
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
 
 /* Insertion: teas */
 INSERT INTO teas (name_tea, description_tea, price_tea, image_path_tea, link_page_tea) VALUES
@@ -207,5 +330,18 @@ INSERT INTO teas (name_tea, description_tea, price_tea, image_path_tea, link_pag
 ('Mandarin Peach', 'Le Mandarin Peach est un mélange équilibré de deux grands thés verts chinois Chun Mee et Sencha, associé à la douceur de la mandarine et de la pêche et rehaussé d''une pointe de gingembre.', 4.4, '/assets/images/mandarin_peach.webp', 'https://fr.special-t.com/fr/8/capsules-the/mandarin-peach-the-vert-aromatise.html'),
 ('Oolong Fujian', 'Un délicat Oolong Ti Kuan Yin de la région du Fujian en Chine, composé de feuilles entières roulées à la main libérant des fragrances végétales, fruitées et biscuitées.', 4.4, '/assets/images/oolong_fujian.webp', 'https://fr.special-t.com/fr/8/capsules-the/oolong-fujian-the-bleu.html');
 
+/* ---- TEST DATA (To remove for production) ---- */
+
 INSERT INTO users (username_user, password_user, firstname_user, lastname_user, email_user) VALUES
 ('root', 'ab5fab9d8241e2ee803265b86753f2e5146c7ddc', 'root', 'root', '***'); /*mdp (sha1): genetec */
+
+INSERT INTO baskets (order_date_basket, validate_basket) VALUES
+('20220510', 1),
+(NULL, 0)
+
+INSERT INTO to_command (ID_basket, ID_tea, number) VALUES
+(1, 1, 5),
+(1, 12, 2),
+(1, 30, 6),
+(2, 1, 1),
+(2, 4, 8);
