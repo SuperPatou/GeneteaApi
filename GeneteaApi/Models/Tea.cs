@@ -2,10 +2,6 @@
 {
     public class Tea
     {
-        public Tea()
-        {
-        }
-
         public Tea(int id, string name, string description, float price, string image_path, string link_page)
         {
             ID_tea = id;

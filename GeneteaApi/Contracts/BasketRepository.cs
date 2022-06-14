@@ -44,13 +44,13 @@ namespace GeneteaApi.Contracts
             }
         }
 
-        public async Task<Basket> UpdateBasket(Basket unBasket)
+        public async Task<Basket> UpdateBasket(int id, Basket unBasket)
         {
             string query = "EXEC UpdateBasket @id, @order_date_basket, @validate_basket";
 
             using (var connection = _context.CreateConnection())
             {
-                Basket basket = await connection.QuerySingleOrDefaultAsync<Basket>(query, new { id= unBasket.ID_basket, order_date_basket = unBasket.order_date_basket, validate_basket = unBasket.validate_basket });
+                Basket basket = await connection.QuerySingleOrDefaultAsync<Basket>(query, new { id= id, order_date_basket = unBasket.order_date_basket, validate_basket = unBasket.validate_basket });
                 return basket;
             }
         }

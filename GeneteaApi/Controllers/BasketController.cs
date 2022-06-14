@@ -10,7 +10,7 @@ namespace GeneteaApi.Controllers
     {
         private readonly IBasketRepository _basketRepo;
         public BasketController(IBasketRepository basketRepo)
-        {
+        {   
             _basketRepo = basketRepo;
         }
         [HttpGet("getBaskets", Name = "Baskets")]
@@ -28,7 +28,7 @@ namespace GeneteaApi.Controllers
         }
 
         [HttpGet("getBasket/{id}", Name = "BasketById")]
-        public async Task<IActionResult> GetTea(int id)
+        public async Task<IActionResult> GetBasket(int id)
         {
             try
             {
@@ -60,11 +60,11 @@ namespace GeneteaApi.Controllers
         }
 
         [HttpPut("updateBasket/{id}", Name = "UpdateBasket")]
-        public async Task<IActionResult> UpdateBasket(Basket unBasket)
+        public async Task<IActionResult> UpdateBasket(int id, Basket unBasket)
         {
             try
             {
-                Basket basket = await _basketRepo.UpdateBasket(unBasket);
+                Basket basket = await _basketRepo.UpdateBasket(id, unBasket);
                 if (basket == null)
                     return NotFound();
                 return Ok(basket);

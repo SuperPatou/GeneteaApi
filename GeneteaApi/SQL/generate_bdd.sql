@@ -250,7 +250,7 @@ AS
 	UPDATE baskets
 	SET order_date_basket = @order_date_basket, validate_basket = @validate_basket
     WHERE ID_basket = @ID_basket;
-	SELECT * from baskets WHERE ID_basket = ID_basket;
+	SELECT * from baskets WHERE ID_basket = @ID_basket;
 GO
 
 /* Procedure: DeleteBasket (int ID_basket) */
