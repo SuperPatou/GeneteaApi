@@ -6,7 +6,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<DapperContext>();
 builder.Services.AddScoped<ITeaRepository, TeaRepository>();
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
-builder.Services.AddScoped<IBasketContentRepository, BasketContentRepository>();
 builder.Services.AddControllers();
 builder.Services.AddSingleton<DapperContext>();
 
