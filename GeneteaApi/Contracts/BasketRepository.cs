@@ -39,7 +39,7 @@ namespace GeneteaApi.Contracts
 
             using (var connection = _context.CreateConnection())
             {
-                Basket basket = await connection.QuerySingleOrDefaultAsync<Basket>(query, new { order_date_basket = unBasket.order_date_basket, validate_basket = unBasket.validate_basket });
+                Basket basket = await connection.QuerySingleOrDefaultAsync<Basket>(query, new { order_date_basket = unBasket.Order_date_basket, validate_basket = unBasket.Validate_basket });
                 return basket;
             }
         }
@@ -50,7 +50,7 @@ namespace GeneteaApi.Contracts
 
             using (var connection = _context.CreateConnection())
             {
-                Basket basket = await connection.QuerySingleOrDefaultAsync<Basket>(query, new { id= id, order_date_basket = unBasket.order_date_basket, validate_basket = unBasket.validate_basket });
+                Basket basket = await connection.QuerySingleOrDefaultAsync<Basket>(query, new { id= id, order_date_basket = unBasket.Order_date_basket, validate_basket = unBasket.Validate_basket });
                 return basket;
             }
         }

@@ -39,7 +39,7 @@ namespace GeneteaApi.Contracts
 
             using (var connection = _context.CreateConnection())
             {
-                Tea tea = await connection.QuerySingleOrDefaultAsync<Tea>(query, new { name = unTea.name_tea, description = unTea.description_tea, price = unTea.price_tea, image_path = unTea.image_path_tea, link_page = unTea.link_page_tea });
+                Tea tea = await connection.QuerySingleOrDefaultAsync<Tea>(query, new { name = unTea.Name_tea, description = unTea.Description_tea, price = unTea.Price_tea, image_path = unTea.Image_path_tea, link_page = unTea.Link_page_tea });
                 return tea;
             }
         }
@@ -50,7 +50,7 @@ namespace GeneteaApi.Contracts
 
             using (var connection = _context.CreateConnection())
             {
-                Tea tea = await connection.QuerySingleOrDefaultAsync<Tea>(query, new { id = unTea.ID_tea, name = unTea.name_tea, description = unTea.description_tea, price = unTea.price_tea, image_path = unTea.image_path_tea, link_page = unTea.link_page_tea });
+                Tea tea = await connection.QuerySingleOrDefaultAsync<Tea>(query, new { id = unTea.ID_tea, name = unTea.Name_tea, description = unTea.Description_tea, price = unTea.Price_tea, image_path = unTea.Image_path_tea, link_page = unTea.Link_page_tea });
                 return tea;
             }
         }
